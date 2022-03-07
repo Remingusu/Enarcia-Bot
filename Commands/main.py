@@ -1,12 +1,33 @@
 import discord
-from discord.ext import commands
+import time
+from discord.ext import commands, tasks
 
 bot = commands.Bot(command_prefix="*", description="Enarcia bot")
 
+bot.remove_command('help')
 
 @bot.event
 async def on_ready():
     print("Ready !")
+
+@bot.event
+async def happy_ny(ctx):
+    hour = time.time()
+    guild = bot.get_guild(916669108714614854)
+    channel = guild.get_channel(916669108714614857)
+    if hour == 	1646680980:
+        await channel.send("Happy New Year")
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("Missing **permissions** !")
+    elif isinstance(error, commands.CommandNotFound):
+        await ctx.send("Command not **found** !")
+    elif isinstance(error, commands.ExtensionAlreadyLoaded):
+        await ctx.send("Extension already **loaded** !")
+    elif isinstance(error, commands.ExtensionNotLoaded):
+        await ctx.send("Extension not **loaded** !")
 
 
 def owner(ctx):
