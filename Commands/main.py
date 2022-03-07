@@ -1,22 +1,25 @@
 import discord
 import time
-from discord.ext import commands, tasks
+from discord.ext import commands
 
 bot = commands.Bot(command_prefix="*", description="Enarcia bot")
 
 bot.remove_command('help')
 
+
 @bot.event
 async def on_ready():
     print("Ready !")
+
 
 @bot.event
 async def happy_ny(ctx):
     hour = time.time()
     guild = bot.get_guild(916669108714614854)
     channel = guild.get_channel(916669108714614857)
-    if hour == 	1646680980:
+    if hour == 0:
         await channel.send("Happy New Year")
+
 
 @bot.event
 async def on_command_error(ctx, error):
