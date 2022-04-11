@@ -80,6 +80,12 @@ class adminCog(commands.Cog):
             await ctx.guild.kick(user, reason=reason)
             await ctx.send(embed=embed)
 
+    async def getVisitorRole(self, ctx):
+        roles = ctx.guild.roles
+        for role in roles:
+            if role.name == "Visitor":
+                return role
+        await ctx.send("Create the role \"Visitor\" please !")
     async def getMutedRole(self, ctx):
         roles = ctx.guild.roles
         for role in roles:
@@ -91,6 +97,9 @@ class adminCog(commands.Cog):
     async def mute(self, ctx, member: discord.Member, *reason):
         author = ctx.message.author
         reason = " ".join(reason)
+        guild = self.bot.get_guild(751466454918103171)
+        channel = guild.get_channel(922624543426752594)
+        visitorRole = await self.getVisitorRole(ctx)
         mutedRole = await self.getMutedRole(ctx)
         nembed = discord.Embed(title="**MUTE !**", description=f"**The Primordials are angry !**", color=0xc5307a)
         nembed.set_thumbnail(url="https://i.ibb.co/2j2D7gR/angry-primordials.png")
@@ -112,6 +121,22 @@ class adminCog(commands.Cog):
         else:
             await member.add_roles(mutedRole, reason=reason)
             await ctx.send(embed=embed)
+        await asyncio.sleep(5)
+        await channel.send("Send *Visit (in this channel for get the visitor role and talk to the prisoner.")
+
+    async def getVisitRole(self, ctx):
+        roles = ctx.guild.roles
+        for role in roles:
+            if role.name == "Visitor":
+                return role
+        await ctx.send("There is no role ! Create the role \"Visitor\" please !")
+    @commands.command()
+    @commands.has_permissions(send_messages=True)
+    async def visit(self, ctx):
+        author = ctx.message.author
+        visitRole = await self.getVisitRole(ctx)
+        await author.add_roles(visitRole)
+        await ctx.send("You are now a visitor...")
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)

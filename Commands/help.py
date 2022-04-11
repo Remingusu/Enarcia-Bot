@@ -14,4 +14,5 @@ class helpCog(commands.Cog):
     @commands.has_permissions(send_messages=True)
     async def help(self, ctx):
         embed = discord.Embed(title="HELP !", value="Need Help ?", color=0xDEFD00)
+
         await ctx.send(embed=embed)
