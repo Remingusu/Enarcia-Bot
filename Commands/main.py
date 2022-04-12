@@ -1,5 +1,4 @@
 import discord
-import time
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix="ù", description="Enarcia bot")
@@ -13,14 +12,6 @@ async def on_ready():
 
 
 @bot.event
-async def happy_ny(ctx):
-    hour = time.time()
-    guild = bot.get_guild(916669108714614854)
-    channel = guild.get_channel(916669108714614857)
-    if hour == 0:
-        await channel.send("Happy New Year")
-
-@bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("Missing **permissions** !")
@@ -30,6 +21,8 @@ async def on_command_error(ctx, error):
         await ctx.send("Extension already **loaded** !")
     elif isinstance(error, commands.ExtensionNotLoaded):
         await ctx.send("Extension not **loaded** !")
+    else:
+        await ctx.send(error)
 
 
 def owner(ctx):

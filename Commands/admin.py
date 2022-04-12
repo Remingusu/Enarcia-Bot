@@ -115,7 +115,7 @@ class adminCog(commands.Cog):
             await member.add_roles(mutedRole, reason=reason)
             await ctx.send(embed=embed)
         await asyncio.sleep(5)
-        await channel.send("Send *Visit (in this channel for get the visitor role and talk to the prisoner.")
+        await channel.send("Send *visit (in the #enarcia-bot) for get the visitor role and talk to the prisoner.")
 
     async def getVisitRole(self, ctx):
         roles = ctx.guild.roles
