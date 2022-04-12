@@ -80,12 +80,6 @@ class adminCog(commands.Cog):
             await ctx.guild.kick(user, reason=reason)
             await ctx.send(embed=embed)
 
-    async def getVisitorRole(self, ctx):
-        roles = ctx.guild.roles
-        for role in roles:
-            if role.name == "Visitor":
-                return role
-        await ctx.send("Create the role \"Visitor\" please !")
     async def getMutedRole(self, ctx):
         roles = ctx.guild.roles
         for role in roles:
@@ -99,7 +93,6 @@ class adminCog(commands.Cog):
         reason = " ".join(reason)
         guild = self.bot.get_guild(751466454918103171)
         channel = guild.get_channel(922624543426752594)
-        visitorRole = await self.getVisitorRole(ctx)
         mutedRole = await self.getMutedRole(ctx)
         nembed = discord.Embed(title="**MUTE !**", description=f"**The Primordials are angry !**", color=0xc5307a)
         nembed.set_thumbnail(url="https://i.ibb.co/2j2D7gR/angry-primordials.png")
