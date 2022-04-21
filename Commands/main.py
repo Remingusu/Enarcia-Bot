@@ -22,6 +22,7 @@ async def on_command_error(ctx, error):
     elif isinstance(error, commands.ExtensionNotLoaded):
         await ctx.send("Extension not **loaded** !")
     else:
+        print(error)
         await ctx.send(error)
 
 
