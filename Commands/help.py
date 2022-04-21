@@ -14,14 +14,34 @@ class helpCog(commands.Cog):
     @commands.has_permissions(send_messages=True)
     async def help(self, ctx):
         sembed = discord.Embed(title="HELP !", value="Need Help ?", color=0xDEFD00)
-        sembed.set_thumbnail(url="https://ibb.co/L8PmYCL")
+        sembed.set_thumbnail(url="https://i.ibb.co/yXRtd8w/discord-help-5f74d24ba3695.png")
         sembed.add_field(name="``Prefix``", value="***The prefix of the bot*** "
                                                   "\nù", inline=False)
-        sembed.add_field(name="Summary", value="1. Admin commands "
-                                               "\n 2. Other commands", inline=False)
+        sembed.add_field(name="Summary", value="ùhelpAdmin "
+                                               "\nùhelpEveryone", inline=False)
+        await ctx.send(embed=sembed)
 
+    @commands.command()
+    @commands.has_permissions(send_messages=True)
+    async def helpEveryone(self, ctx):
+        eembed = discord.Embed(title="Help for everyone", value="List of commands for everyone", color=0x1ABC00)
+        eembed.set_thumbnail(url="https://i.ibb.co/z84SfDB/bot.png")
+        eembed.add_field(name="Other commands", value="Commands that can be done by everyone "
+                                                      "\n", inline=False)
+
+        eembed.add_field(name="``ùGenerateRace``", value="***Generate a random race*** "
+                                                         "\nùGenerateRace", inline=False)
+
+        eembed.add_field(name="``ùTrello``", value="***Send the Trello links of the mod and the bot*** "
+                                                   "\nùTrello", inline=True)
+        eembed.add_field(name="ùTester", value="***Sends the link of the discord server for testing the bot*** "
+                                               "\nùTester", inline=True)
+        await ctx.send(embed=eembed)
+
+    @commands.command()
+    async def helpAdmin(self, ctx):
         aembed = discord.Embed(title="Admin Help !", value="List of commands for admin / modo", color=0xD70000)
-        aembed.set_thumbnail(url="https://ibb.co/X4Rv6LB")
+        aembed.set_thumbnail(url="https://i.ibb.co/z5v0Cxc/modo.png")
         aembed.add_field(name="``ùban``", value="***Ban a member*** "
                                                 "\nùban [member-mention] ([raison])", inline=True)
         aembed.add_field(name="``ùunban``", value="***Unban a member*** "
@@ -56,19 +76,4 @@ class helpCog(commands.Cog):
                                                       "You must ask @Dreyse to process.** "
                                                       "\n", inline=False)
 
-        eembed = discord.Embed(title="Help for everyone", value="List of commands for everyone", color=0x1ABC00)
-        eembed.set_thumbnail(url="https://ibb.co/db5QKxV")
-        eembed.add_field(name="Other commands", value="Commands that can be done by everyone "
-                                                      "\n", inline=False)
-
-        eembed.add_field(name="``ùGenerateRace``", value="***Generate a random race*** "
-                                                         "\nùGenerateRace", inline=False)
-
-        eembed.add_field(name="``ùTrello``", value="***Send the Trello links of the mod and the bot*** "
-                                                   "\nùTrello", inline=True)
-        eembed.add_field(name="ùTester", value="***Sends the link of the discord server for testing the bot*** "
-                                               "\nùTester", inline=True)
-
-        await ctx.send(embed=sembed)
         await ctx.send(embed=aembed)
-        await ctx.send(embed=eembed)
