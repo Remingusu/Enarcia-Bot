@@ -133,6 +133,12 @@ class adminCog(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
+    async def tempMute(self, ctx):
+        await ctx.send("The command is not ready !"
+                       "See the Trello: https://trello.com/b/M8q5hjRJ")
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
     async def unmute(self, ctx, member: discord.Member):
         mutedRole = await self.getMutedRole(ctx)
         await member.remove_roles(mutedRole)
