@@ -32,6 +32,16 @@ def owner(ctx):
 
 @bot.command()
 @commands.check(owner)
+async def loadAll(ctx):
+    bot.load_extension("admin")
+    bot.load_extension("fun")
+    bot.load_extension("help")
+    bot.load_extension("info")
+    await ctx.send("All extensions have been loaded")
+
+
+@bot.command()
+@commands.check(owner)
 async def load(ctx, name = None):
     if not name:
         ctx.send("Please enter a name !")
