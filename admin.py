@@ -1,7 +1,9 @@
+import datetime
 import discord
 import random
 import asyncio
-from discord.ext import commands
+from discord.ext import commands, tasks
+from database.database_handler import DatabaseHandler
 
 
 def setup(bot):
@@ -11,6 +13,8 @@ def setup(bot):
 class adminCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    database_handler = DatabaseHandler("database_enarcia.db")
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -133,9 +137,24 @@ class adminCog(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def tempMute(self, ctx):
-        await ctx.send("The command is not ready !"
-                       "See the Trello: https://trello.com/b/M8q5hjRJ")
+    async def tempMute(self, ctx, member: discord.member, seconds: int, *, reason="Mute user"):
+        mutedRole = await self.getMutedRole(ctx)
+        self.database_handler.set_tempMute(member.id, ctx.guild.id, datetime.datetime.utcnow() + datetime.timedelta(seconds=seconds))
+        await member.add_roles(mutedRole, reason=reason)
+        await ctx.send(embed=f"{member} is mute for {seconds} seconds !")
+    @tasks.loop(seconds=1)
+    async def verif_unmute(self):
+        eaa_guild = self.bot.get_guild(909488799485149235)
+        channel = eaa_guild.get_channel(949943253623517194)
+        for guild in self.bot.guilds:
+            active = self.database_handler.verif_tempMute(guild.id)
+            if len(active) > 0:
+                mutedRole = await self.getMutedRole(guild)
+                for row in active:
+                    member = guild.get_member(row["user_id"])
+                    self.database_handler.revoke_tempMute(row["id"])
+                    await member.remove_roles(mutedRole)
+                    await channel.send(f"{member}'s mute is over !")
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)

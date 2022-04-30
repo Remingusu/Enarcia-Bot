@@ -1,8 +1,11 @@
+import discord
 from discord.ext import commands
 from discord_slash import SlashCommand
 from discord_slash.utils.manage_commands import create_option, create_choice
 
-bot = commands.Bot(command_prefix="ù", description="Enarcia bot")
+intents = discord.Intents().default()
+intents.members = True
+bot = commands.Bot(command_prefix="ù", description="Enarcia bot", intents=intents)
 slash = SlashCommand(bot, sync_commands=True)
 
 bot.remove_command('help')
