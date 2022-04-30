@@ -8,10 +8,10 @@ class DatabaseHandler:
         self.con = sqlite3.connect(f"{os.path.dirname(os.path.abspath(__file__))}/{database_name}")
         self.con.row_factory = sqlite3.Row
 
-    def set_tempMute(self, user_id: int, guild_id: int, expiration_date: datetime.datetime):
+    def set_tempMute(self, user_id: int, guild_id: int, expiration: datetime.datetime):
         cursor = self.con.cursor()
-        query = "INSERT INTO tempMute (user_id, guild_id, expiration_date) VALUES (?, ?, ?);"
-        cursor.execute(query, (user_id, guild_id, expiration_date))
+        query = "INSERT INTO tempMute (user_id, guild_id, expiration) VALUES (?, ?, ?);"
+        cursor.execute(query, (user_id, guild_id, expiration))
         cursor.close()
         self.con.commit()
 

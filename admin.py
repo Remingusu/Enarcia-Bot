@@ -16,6 +16,10 @@ class adminCog(commands.Cog):
 
     database_handler = DatabaseHandler("database_enarcia.db")
 
+    @bot.event
+    async def verif_database(self):
+        self.verif_unmute.start()
+
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, user: discord.User, *reason):
@@ -137,15 +141,13 @@ class adminCog(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def tempMute(self, ctx, member: discord.member, seconds: int, *, reason="Mute user"):
+    async def tempMute(self, ctx, member: discord.Member, seconds: int, *, reason="Mute user"):
         mutedRole = await self.getMutedRole(ctx)
         self.database_handler.set_tempMute(member.id, ctx.guild.id, datetime.datetime.utcnow() + datetime.timedelta(seconds=seconds))
         await member.add_roles(mutedRole, reason=reason)
-        await ctx.send(embed=f"{member} is mute for {seconds} seconds !")
+        await ctx.send("test")
     @tasks.loop(seconds=1)
     async def verif_unmute(self):
-        eaa_guild = self.bot.get_guild(909488799485149235)
-        channel = eaa_guild.get_channel(949943253623517194)
         for guild in self.bot.guilds:
             active = self.database_handler.verif_tempMute(guild.id)
             if len(active) > 0:
@@ -154,7 +156,6 @@ class adminCog(commands.Cog):
                     member = guild.get_member(row["user_id"])
                     self.database_handler.revoke_tempMute(row["id"])
                     await member.remove_roles(mutedRole)
-                    await channel.send(f"{member}'s mute is over !")
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
