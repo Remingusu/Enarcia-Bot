@@ -1,8 +1,6 @@
-import discord
-from discord.ext import commands
+²from discord.ext import commands
 from discord_slash import SlashCommand
 from discord_slash.utils.manage_commands import create_option, create_choice
-from discord_slash.utils.manage_components import *
 
 bot = commands.Bot(command_prefix="ù", description="Enarcia bot")
 slash = SlashCommand(bot, sync_commands=True)
