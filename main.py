@@ -16,6 +16,10 @@ async def on_ready():
     print("Ready !")
 
 
+def owner(ctx):
+    return ctx.author.id == 693761548048531509
+
+
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
@@ -29,10 +33,6 @@ async def on_command_error(ctx, error):
     else:
         print(error)
         await ctx.send(error)
-
-
-def owner(ctx):
-    return ctx.author.id == 693761548048531509
 
 
 @commands.check(owner)
@@ -97,7 +97,7 @@ async def reload(ctx, extension):
         bot.reload_extension("info")
         await ctx.send("All extensions have been reloaded")
     else:
-        bot.load_extension(extension)
+        bot.reload_extension(extension)
         await ctx.send("The " + "**" + extension + "**" + " file has been reloaded !")
 
 

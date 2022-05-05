@@ -16,8 +16,8 @@ class adminCog(commands.Cog):
 
     database_handler = DatabaseHandler("database_enarcia.db")
 
-    @bot.event
-    async def verif_database(self):
+    @commands.Cog.listener()
+    async def verif_temp(self):
         self.verif_unmute.start()
 
     @commands.command()
@@ -138,24 +138,6 @@ class adminCog(commands.Cog):
         visitRole = await self.getVisitRole(ctx)
         await author.add_roles(visitRole)
         await ctx.send("You are now a visitor...")
-
-    @commands.command()
-    @commands.has_permissions(manage_messages=True)
-    async def tempMute(self, ctx, member: discord.Member, seconds: int, *, reason="Mute user"):
-        mutedRole = await self.getMutedRole(ctx)
-        self.database_handler.set_tempMute(member.id, ctx.guild.id, datetime.datetime.utcnow() + datetime.timedelta(seconds=seconds))
-        await member.add_roles(mutedRole, reason=reason)
-        await ctx.send("test")
-    @tasks.loop(seconds=1)
-    async def verif_unmute(self):
-        for guild in self.bot.guilds:
-            active = self.database_handler.verif_tempMute(guild.id)
-            if len(active) > 0:
-                mutedRole = await self.getMutedRole(guild)
-                for row in active:
-                    member = guild.get_member(row["user_id"])
-                    self.database_handler.revoke_tempMute(row["id"])
-                    await member.remove_roles(mutedRole)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
