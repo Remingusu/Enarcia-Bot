@@ -101,4 +101,4 @@ async def reload(ctx, extension):
         await ctx.send("The " + "**" + extension + "**" + " file has been reloaded !")
 
 
-bot.run("OTA4OTc4NDc2NjE3NDY1ODc2.YY9mLA.Uuj1sCJ3s0JcRfvNn0lg0mHaLLE")
+bot.run("Remingusu#2155 for the token to launch the bot")
